@@ -17,15 +17,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services
-    .AddIdentityCore<AppUser>(options =>
-    {
-        options.SignIn.RequireConfirmedAccount = true;
-    })
+    .AddIdentityCore<AppUser>()
     .AddRoles<AppRole>()
+    .AddSignInManager<SignInManager<AppUser>>()
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<AppDbContext>();
-
-builder.Services.AddHttpContextAccessor();
-builder.Services.TryAddScoped<SignInManager<AppUser>>();
 
 builder.Services
     .AddAuthentication(options =>
